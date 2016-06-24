@@ -64,18 +64,4 @@ class TeacherController extends Controller
 
         return '删除失败';
     }
-
-    public function test()
-    {
-        // 只要是我们学校的学生，回答学校是否建校100年，答案都是一个。
-        var_dump(Hebuter::isSchoolMoreThan100()); 
-
-        $Hebuter = new Hebuter;
-        $xiaohong = $Hebuter::get('xiaohong'); // 小红
-        $xiaoming = $Hebuter::get('xiaoming'); // 小明
-        
-        // 小红和小明回答自己的身份证号码，答案不一致
-        var_dump($xiaohong->whatIsYouId());
-        var_dump($xiaoming->whatIsYouId());
-    }
 }
