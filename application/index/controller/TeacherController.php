@@ -65,4 +65,9 @@ class TeacherController extends Controller
         // 进行跳转
         return $this->success($message, url('index'));
     }
+
+    public function edit()
+    {
+        var_dump(input('get.'));
+    }
 }
