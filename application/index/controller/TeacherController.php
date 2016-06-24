@@ -86,4 +86,9 @@ class TeacherController extends Controller
         // 将封装好的V层内容返回给用户
         return $htmls;
     }
+    
+    public function update()
+    {
+        var_dump(input('post.'));
+    }
 }
