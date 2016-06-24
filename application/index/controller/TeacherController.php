@@ -74,19 +74,31 @@ class TeacherController extends Controller
 
     public function delete()
     {
-        // 接收ID，并转换为int类型
-        $id = input('get.id/d');
+        $message    = '';   // 反馈消息
+        $error      = '';   // 反馈错误信息
 
-        // 直接删除相关关键字记录
-        if ($count = Teacher::destroy($id))
-        {
-            $message = '成功删除' . $count . '条数据';
-        } else {
-            $message = '删除失败';
+        try {
+            // 接收ID，并转换为int类型
+            $id = input('get.id/d');
+
+            // 直接删除相关关键字记录
+            if ($count = Teacher::destroy($id))
+            {
+                $message = '成功删除' . $count . '条数据';
+            } else {
+                $error = '删除失败';
+            }
+        } catch (\Exception $e) {
+            $error = '系统错误' . $e->getMessage();
         }
-        
+
         // 进行跳转
-        return $this->success($message, url('index'));
+        if ($error === '')
+        {
+            return $this->success($message, url('index'));
+        } else {
+            return $this->error($error);
+        }
     }
 
     public function edit()
