@@ -51,15 +51,18 @@ class TeacherController extends Controller
 
     public function delete()
     {
-        var_dump(input('get.'));
-        die();
+        // 接收ID，并转换为int类型
+        $id = input('get.id/d');
 
         // 直接删除相关关键字记录
-        if ($count = Teacher::destroy(15))
+        if ($count = Teacher::destroy($id))
         {
-            return '成功删除' . $count . '条数据';
+            $message = '成功删除' . $count . '条数据';
+        } else {
+            $message = '删除失败';
         }
-       
-        return '删除失败';
+        
+        // 进行跳转
+        return $this->success($message, url('index'));
     }
 }
