@@ -1,6 +1,6 @@
 <?php
 namespace app\index\controller;
-use app\model\Teacher;  // 教师模型
+use app\model\Teacher as SmallTeacher;  // 教师模型 带有别名
 /**
  * 教师管理
  */
@@ -8,7 +8,7 @@ class Teacher
 {
     public function index()
     {
-        $Teacher = new Teacher;
-        dump($Teacher);
+        $SmallTeacher = new SmallTeacher;
+        dump($SmallTeacher);
     }
 }
