@@ -13,7 +13,7 @@ class TeacherController extends Controller
         $teachers = $Teacher->select();
 
         // 向V层传数据
-        $this->assign('hello', $teachers);
+        $this->assign('teachers', $teachers);
 
         // 取回打包后的数据
         $htmls = $this->fetch();
