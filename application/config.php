@@ -16,4 +16,5 @@ return [
         'type' => 'trace', // 支持 socket trace file
     ],
     'use_controller_suffix'  => true,
+    'default_filter'=>'htmlspecialchars',
 ];

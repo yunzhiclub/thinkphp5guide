@@ -31,5 +31,7 @@ class TeacherController extends Controller
     public function insert()
     {
         var_dump($_POST);
+        $postData = input('post.');
+        var_dump($postData);
     }
 }
