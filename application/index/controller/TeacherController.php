@@ -10,8 +10,11 @@ class TeacherController extends Controller
     public function index()
     {
         try {
+            $pageSize = 5; // 每次显示5条数据
             $Teacher = new Teacher; 
-            $teachers = $Teacher->select();
+
+            // 调用分页
+            $teachers = $Teacher->paginate($pageSize);
 
             // 向V层传数据
             $this->assign('teachers', $teachers);
@@ -22,8 +25,6 @@ class TeacherController extends Controller
             // 将数据返回给用户
             return $htmls;
         } catch (\Exception $e) {
-            // 由于对异常进行了处理，如果发生了错误，我们仍然需要查看具体的异常位置及信息，那么需要将以下代码的注释去掉。
-            // throw $e;
             return '系统错误' . $e->getMessage();
         }
     }
