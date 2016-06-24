@@ -103,23 +103,28 @@ class TeacherController extends Controller
 
     public function edit()
     {
-        // 获取传入ID
-        $id = input('get.id/d');
+        try {
+            // 获取传入ID
+            $id = input('get.id/d');
 
-        // 在Teacher表模型中获取当前记录
-        if (false === $teacher = Teacher::get($id))
+            // 在Teacher表模型中获取当前记录
+            if (false === $teacher = Teacher::get($id))
+            {
+                return '系统未找到ID为' . $id . '的记录';
+            } 
+
+            // 将数据传给V层
+            $this->assign('teacher', $teacher);
+
+            // 获取封装好的V层内容
+            $htmls = $this->fetch();
+
+            // 将封装好的V层内容返回给用户
+            return $htmls;
+        } catch (\Exception $e)
         {
-            return '系统未找到ID为' . $id . '的记录';
-        } 
-        
-        // 将数据传给V层
-        $this->assign('teacher', $teacher);
-
-        // 获取封装好的V层内容
-        $htmls = $this->fetch();
-
-        // 将封装好的V层内容返回给用户
-        return $htmls;
+            return '系统错误:' . $e->message();
+        }
     }
     
     public function update()
