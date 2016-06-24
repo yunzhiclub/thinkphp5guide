@@ -30,28 +30,45 @@ class TeacherController extends Controller
 
     public function add()
     {
-        $htmls = $this->fetch();
-        return $htmls;
+        try {
+            $htmls = $this->fetch();
+            return $htmls;
+        } catch (\Exception $e) {
+            return '系统错误' . $e->getMessage();
+        }
     }
 
     public function insert()
     {
-        // 接收传入数据
-        $teacher = input('post.');
-        $teacher['create_time'] = time();   // 加入时间戳
-
-        // 引用Teacher模型
-        $Teacher = new Teacher();
-
-        // 加入验证信息
-        $result = $Teacher->validate(true)->data($teacher)->save();
-
-        // 反馈结果
-        if (false === $result)
+        $message    = '';   // 反馈消息
+        $error      = '';   // 反馈错误信息
+        
+        try
         {
-            return '新增失败:' . $Teacher->getError();
+            // 实例化空模型，写入数据。
+            $teacher            = new Teacher;
+            $teacher->name      = input('post.name');
+            $teacher->username  = input('post.username');
+            $teacher->sex       = input('post.sex');
+            $teacher->email     = input('post.email');
+
+            // 加入验证信息
+            if (false === $teacher->validate(true)->save())
+            {
+                $error = '新增失败:' . $teacher->getError();
+            } else {
+                $message = $teacher->name . '新增成功';
+            }
+        } catch (\Exception $e) {
+            $error = '系统错误:' . $e->getMessage();
+        }
+
+        // 判断是否发生错误，返回不同信息。
+        if ($error === '')
+        {
+            return $this->success($message, url('index'));
         } else {
-            return $teacher['name'] . '新增成功';
+            return $this->error($error);
         }
     }
 
