@@ -129,6 +129,9 @@ class TeacherController extends Controller
     
     public function update()
     {
+        $message    = '';   // 反馈消息
+        $error      = '';   // 反馈错误信息
+
         try
         {
             // 接收数据，取要更新的关键字信息
@@ -147,16 +150,20 @@ class TeacherController extends Controller
             $message = '更新成功';
             if (false === $teacher->validate(true)->save())
             {
-                $message =  '更新失败' . $teacher->getError();
+                $error =  '更新失败' . $teacher->getError();
             }
 
         } catch (\Exception $e)
         {
-            // 由于对异常进行了处理，如果发生了错误，我们仍然需要查看具体的异常位置及信息，那么需要将以下的代码的注释去掉
-            // throw $e;
-            $message = $e->getMessage();
+            $error = '系统错误:' . $e->getMessage();
         }
-       
-        return $message;
+        
+        // 进行跳转
+        if ($error === '')
+        {
+            return $this->success($message, url('index'));
+        } else {
+            return $this->error($error);
+        }
     }
 }
