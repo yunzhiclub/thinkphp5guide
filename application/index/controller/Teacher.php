@@ -9,7 +9,10 @@ class Teacher
         // 获取教师表中的所有数据
         $teachers = DB::name('teacher')->select();
 
+        // 用下面的语句，也可以直接返回给用户
+        echo $teachers[0]['name'];
+        
         // 查看获取的数据
-        var_dump($teachers);
+        return $teachers[0]['name'];
     }
 }
