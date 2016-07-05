@@ -75,30 +75,34 @@ class TeacherController extends Controller
 
     public function delete()
     {
-        $message    = '';   // 反馈消息
-        $error      = '';   // 反馈错误信息
+        $message    = '删除成功';         // 反馈消息
+        $error      = '';               // 反馈错误信息
 
         try {
             // 接收ID，并转换为int类型
             $id = input('get.id/d');
 
-            // 直接删除相关关键字记录
-            if ($count = Teacher::destroy($id))
-            {
-                $message = '成功删除' . $count . '条数据';
-            } else {
-                $error = '删除失败';
-            }
-        } catch (\Exception $e) {
-            $error = '系统错误' . $e->getMessage();
-        }
+            // 获取要删除的对象
+            $Teacher = Teacher::get($id);
 
-        // 进行跳转
-        if ($error === '')
-        {
+            // 判断对象是否存在
+            if (false === $Teacher)
+            {
+                throw new \Exception('不存在id为' . $id . '的教师，删除失败');
+            }
+
+            // 删除获取到的对象
+            if (false === $Teacher->delete())
+            {
+                throw new \Exception('删除失败:' . $Teacher->getError());
+            }
+
+            // 程序正确执行，进行跳转
             return $this->success($message, url('index'));
-        } else {
-            return $this->error($error);
+
+        } catch (\Exception $e) {
+            // 程序异常执行，接收异常并报错。
+            return $this->error('系统错误' . $e->getMessage());
         }
     }
 
@@ -166,5 +170,20 @@ class TeacherController extends Controller
         } else {
             return $this->error($error);
         }
+    }
+
+    public function test()
+    {
+            $pageSize = 5; // 每次显示5条数据
+            $Teacher = new Teacher; 
+
+            // 调用分页
+            $teachers = $Teacher->paginate($pageSize);
+            var_dump($teachers);
+            var_dump($teachers->count()); // 调用count()方法
+
+            // 不调用分页
+            $teachers = $Teacher->select();
+            var_dump($teachers);
     }
 }
