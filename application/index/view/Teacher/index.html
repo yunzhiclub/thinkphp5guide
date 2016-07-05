@@ -22,7 +22,7 @@
                     <th>用户名</th>
                     <th>操作</th>
                 </tr>
-                {volist name="teachers" id="teacher" key="key"}
+                                {volist name="teachers" id="teacher" key="key"}
                 <tr>
                     <td>{$key}</td>
                     <td>{$teacher->getData('name')}</td>
@@ -37,8 +37,23 @@
                 </tr>
                 {/volist}
             </table>
-            当前页面的条数为{$teachers->count()}
-            {$teachers->render()}
+            <nav>
+                <ul class="pagination">
+                    <li>
+                        <a href="{:url('?page=1')}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <li><a href="{:url('?page=1')}">1</a></li>
+                    <li><a href="{:url('?page=2')}">2</a></li>
+                    <li><a href="{:url('?page=3')}">3</a></li>
+                    <li>
+                        <a href="{:url('?page=3')}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
         </div>
     </div>
 </body>
