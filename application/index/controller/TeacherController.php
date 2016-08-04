@@ -9,31 +9,24 @@ class TeacherController extends Controller
 {
     public function index()
     {
-        // try {
-        //     $pageSize = 5; // 每次显示5条数据
-        //     $Teacher = new Teacher; 
+        try {
+            $pageSize = 5; // 每次显示5条数据
+            $Teacher = new Teacher; 
 
-        //     // 调用分页
-        //     $teachers = $Teacher->paginate($pageSize);
+            // 调用分页
+            $teachers = $Teacher->paginate($pageSize);
 
-        //     // 向V层传数据
-        //     $this->assign('teachers', $teachers);
+            // 向V层传数据
+            $this->assign('teachers', $teachers);
 
-        //     // 取回打包后的数据
-        //     $htmls = $this->fetch();
+            // 取回打包后的数据
+            $htmls = $this->fetch();
 
-        //     // 将数据返回给用户
-        //     return $htmls;
-        // } catch (\Exception $e) {
-        //     return '系统错误' . $e->getMessage();
-        // }
-        $Teacher = new Teacher;
-        $teachers = $Teacher->select();
-        $teacher = $teachers[1];
-        echo $teacher->getData('name');
-        return $teacher->getData('name');
-        var_dump($teacher->getdata('name'));
-        
+            // 将数据返回给用户
+            return $htmls;
+        } catch (\Exception $e) {
+            return '系统错误' . $e->getMessage();
+        }
     }
 
     public function add()
